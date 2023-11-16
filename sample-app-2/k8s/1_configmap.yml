@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sample-app-2-configmap
+  namespace: sample-app-2
+data:
+  GATEWAY_PORT: "3100"
+  RABBIT_MQ_URI: amqp://user:user@rabbitmq-global.global-system.svc.cluster.local:5672
+  RABBIT_MQ_SAMPLE_1_QUEUE: "sample_1_queue"
+  RABBIT_MQ_SAMPLE_2_QUEUE: "sample_2_queue"

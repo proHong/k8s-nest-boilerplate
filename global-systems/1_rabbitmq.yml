@@ -1,0 +1,12 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+    name: rabbitmq-global
+    namespace: global-system
+spec:
+    replicas: 3
+    rabbitmq:
+        envConfig: |
+            RABBITMQ_DEFAULT_USER=user
+            RABBITMQ_DEFAULT_PASS=user
+            RABBITMQ_NODE_PORT=5672

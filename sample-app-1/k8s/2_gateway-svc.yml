@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-svc
+  namespace: sample-app-1
+  labels:
+    app: gateway-svc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-svc
+  template:
+    metadata:
+      labels:
+        app: gateway-svc
+    spec:
+      containers:
+      - name: gateway-svc
+        image: "sample-1-gateway-svc:latest"
+        imagePullPolicy: Never
+        ports:
+          - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: sample-app-1-configmap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-svc
+  namespace: sample-app-1
+spec:
+  type: NodePort
+  selector:
+    app: gateway-svc
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 30100

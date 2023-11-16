@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-svc
+  namespace: sample-app-1
+  labels:
+    app: sample-svc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-svc
+  template:
+    metadata:
+      labels:
+        app: sample-svc
+    spec:
+      containers:
+        - name: sample-svc
+          image: "sample-1-sample-svc:latest"
+          imagePullPolicy: Never
+          envFrom:
+          - configMapRef:
+              name: sample-app-1-configmap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-svc
+  namespace: sample-app-1
+spec:
+  selector:
+    app: sample-svc
+  ports:
+  - protocol: TCP
+    port: 3001
+    targetPort: 3001
