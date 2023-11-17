@@ -2,13 +2,24 @@
 
 kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
 
-kubectl apply -f ./global-systems/0_namespace.yml
-kubectl apply -f ./global-systems/1_rabbitmq.yml
+for file in ./global-systems/*
+do
+        if [ -f $file ]
+        then
+                kubectl apply -f $file
+        fi
+done
 
-cd sample-app-1
-./run_script.sh
-cd ..
 
-cd sample-app-2
-./run_script.sh
-cd ..
+for dir in ./*
+do
+        if [ -d $dir ]
+        then
+            cd $dir
+            if [ -f ./run_script.sh ]
+            then
+                ./run_script.sh
+            fi
+            cd ..
+        fi
+done

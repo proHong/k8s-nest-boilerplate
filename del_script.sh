@@ -1,13 +1,27 @@
 #!/bin/bash
+shopt -s nullglob 
 
-cd sample-app-2
-./del_script.sh
-cd ..
+files=($( ls ))
 
-cd sample-app-1
-./del_script.sh
-cd ..
+for (( idx=${#files[@]}-1 ; idx>=0 ; idx-- ))
+do
+    if [ -d ${files[idx]} ]
+    then
+        cd ${files[idx]}
+        if [ -f ./del_script.sh ]
+        then
+            ./del_script.sh
+        fi
+        cd ..
+    fi
+done
 
+globalsystems=($( ls ./global-systems ))
 
-kubectl delete -f ./global-systems/1_rabbitmq.yml
-kubectl delete -f ./global-systems/0_namespace.yml
+for (( idx=${#globalsystems[@]}-1 ; idx>=0 ; idx-- ))
+do
+    if [ -f ./global-systems/${globalsystems[idx]} ]
+    then
+        kubectl delete -f ./global-systems/${globalsystems[idx]}
+    fi
+done

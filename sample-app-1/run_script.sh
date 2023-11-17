@@ -1,9 +1,20 @@
 #!/bin/bash
 
-docker build -t sample-1-gateway-svc -f apps/gateway-svc/Dockerfile .
-docker build -t sample-1-sample-svc -f apps/sample-svc/Dockerfile .
+for file in ./apps/*
+do
+        if [ -d $file ]
+        then
+            if [ -f $file/Dockerfile ]
+            then
+                docker build -t $(basename $file) -f $file/Dockerfile .
+            fi
+        fi
+done
 
-kubectl apply -f ./k8s/0_namespace.yml
-kubectl apply -f ./k8s/1_configmap.yml
-kubectl apply -f ./k8s/2_gateway-svc.yml
-kubectl apply -f ./k8s/3_sample-svc.yml
+for file in ./k8s/*
+do
+        if [ -f $file ]
+        then
+            kubectl apply -f $file
+        fi
+done
