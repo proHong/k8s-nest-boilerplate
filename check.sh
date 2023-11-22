@@ -11,4 +11,3 @@ for Dependence in "${Dependencies[@]}"; do
 done
 
 echo "Success"
-exit 1

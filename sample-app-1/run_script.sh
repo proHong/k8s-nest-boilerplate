@@ -6,7 +6,7 @@ do
         then
             if [ -f $file/Dockerfile ]
             then
-                docker build -t $(basename $file) -f $file/Dockerfile .
+                docker build -t $(basename $PWD)-$(basename $file) -f $file/Dockerfile .
             fi
         fi
 done

@@ -13,7 +13,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod
 
 FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
-RUN pnpm run build gateway-svc
+RUN pnpm build gateway-svc
 
 FROM base
 COPY --from=prod-deps /app/node_modules /app/node_modules
